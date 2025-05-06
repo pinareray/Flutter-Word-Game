@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "378683067383",
+    "project_id": "flutterwordgame",
+    "storage_bucket": "flutterwordgame.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378683067383:android:9cb6c09d76d00f957dbcf2",
+        "android_client_info": {
+          "package_name": "com.example.flutter_word_game"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkyGvxp-LGncNoghZQF3waMdDymej5DXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
