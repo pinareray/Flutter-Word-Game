@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_word_game/core/tts_service.dart';
 import '../../core/services/firestore_service.dart';
 import '../models/word.dart';
 import 'quiz_screen.dart';
@@ -14,6 +15,7 @@ class ReviewTodayScreen extends StatefulWidget {
 class _ReviewTodayScreenState extends State<ReviewTodayScreen> {
   late FirestoreService firestoreService;
   late Future<List<Word>> todayWords;
+  final ttsService = TextToSpeechService(); // 🔈 TTS örneği
 
   @override
   void initState() {
@@ -81,9 +83,12 @@ class _ReviewTodayScreenState extends State<ReviewTodayScreen> {
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text("Türkçesi: ${word.tur}"),
-                        trailing: const Icon(
-                          Icons.quiz,
-                          color: Colors.deepPurple,
+                        trailing: IconButton(
+                          icon: const Icon(
+                            Icons.volume_up,
+                            color: Colors.deepPurple,
+                          ),
+                          onPressed: () => ttsService.speak(word.eng),
                         ),
                       ),
                     );

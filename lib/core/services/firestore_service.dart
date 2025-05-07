@@ -10,6 +10,12 @@ class FirestoreService {
   CollectionReference<Map<String, dynamic>> get _userWordsRef =>
       _db.collection('users').doc(uid).collection('words');
 
+  DocumentReference<Map<String, dynamic>> get _userSettingsRef => _db
+      .collection('users')
+      .doc(uid)
+      .collection('settings')
+      .doc('preferences');
+
   /// Yeni kelime ekler
   Future<void> addWord(Word word) async {
     try {
@@ -20,7 +26,7 @@ class FirestoreService {
     }
   }
 
-  /// Bugün tekrar edilmesi gereken kelimeleri getir
+  /// Günlük tekrar sayısı kadar kelimeyi getir
   Future<List<Word>> getTodayReviewWords() async {
     try {
       final snapshot = await _userWordsRef.get();
@@ -28,21 +34,34 @@ class FirestoreService {
           snapshot.docs.map((doc) => Word.fromMap(doc.data())).toList();
 
       final now = DateTime.now();
+
+      print("🕒 Şu an: $now");
+      print("🔍 Kelime sayısı: ${allWords.length}");
+
       final dueWords =
           allWords.where((word) {
+            print(
+              "👉 ${word.eng} - nextReviewAt: ${word.nextReviewAt}, success: ${word.successCount}",
+            );
+
             if (word.successCount >= 6) return false;
             return word.nextReviewAt == null ||
                 word.nextReviewAt!.isBefore(now);
           }).toList();
 
-      return dueWords;
+      print("✅ Tekrar edilmesi gereken kelime sayısı: ${dueWords.length}");
+
+      final settings = await getUserSettings();
+      final limit = settings['dailyLimit'] ?? 10;
+
+      return dueWords.take(limit).toList();
     } catch (e) {
       print("❌ Firestore HATA (getTodayReviewWords): $e");
       return [];
     }
   }
 
-  /// Quiz sonucu günceller (başarı/başarısızlık durumuna göre)
+  /// Quiz sonucu günceller
   Future<void> updateWordProgress({
     required String wordId,
     required bool isCorrect,
@@ -77,7 +96,7 @@ class FirestoreService {
     }
   }
 
-  /// Tekrar zamanlaması için gün aralıkları
+  /// Zamanlama aralığı
   int getNextInterval(int count) {
     const intervals = [1, 7, 30, 90, 180, 365];
     return (count >= intervals.length) ? 365 : intervals[count];
@@ -91,6 +110,62 @@ class FirestoreService {
     } catch (e) {
       print("❌ Firestore HATA (getAllWords): $e");
       return [];
+    }
+  }
+
+  /// Kullanıcı ayarlarını getir (varsayılan: günlük limit 10)
+  Future<Map<String, dynamic>> getUserSettings() async {
+    try {
+      final doc = await _userSettingsRef.get();
+      return doc.exists ? doc.data() ?? {} : {'dailyLimit': 10};
+    } catch (e) {
+      print("❌ Firestore HATA (getUserSettings): $e");
+      return {'dailyLimit': 10};
+    }
+  }
+
+  /// Kullanıcı ayarlarını güncelle
+  Future<void> updateUserSettings({required int dailyLimit}) async {
+    try {
+      await _userSettingsRef.set({'dailyLimit': dailyLimit});
+      print("✅ Kullanıcı ayarları güncellendi");
+    } catch (e) {
+      print("❌ Firestore HATA (updateUserSettings): $e");
+    }
+  }
+
+  /// Öğrenilmiş kelimeleri getir (successCount >= 6)
+  Future<List<Word>> getLearnedWords() async {
+    try {
+      final snapshot =
+          await _userWordsRef
+              .where('successCount', isGreaterThanOrEqualTo: 6)
+              .get();
+
+      return snapshot.docs.map((doc) => Word.fromMap(doc.data())).toList();
+    } catch (e) {
+      print("❌ Firestore HATA (getLearnedWords): $e");
+      return [];
+    }
+  }
+
+  /// Word Chain hikayesini ve görsel URL'sini kaydeder
+  Future<void> saveWordChainStory({
+    required List<String> words,
+    required String story,
+    required String imageUrl,
+  }) async {
+    try {
+      await _db.collection('users').doc(uid).collection('word_chains').add({
+        'words': words,
+        'story': story,
+        'imageUrl': imageUrl,
+        'createdAt': Timestamp.now(),
+      });
+
+      print("✅ Word Chain hikayesi kaydedildi");
+    } catch (e) {
+      print("❌ Firestore HATA (saveWordChainStory): $e");
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_word_game/core/services/firestore_service.dart';
+import 'package:flutter_word_game/core/tts_service.dart';
 import 'package:flutter_word_game/feature/models/word.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -14,6 +15,7 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   late final FirestoreService firestoreService;
+  final ttsService = TextToSpeechService();
 
   int currentIndex = 0;
   int correctCount = 0;
@@ -105,17 +107,42 @@ class _QuizScreenState extends State<QuizScreen> {
             const SizedBox(height: 20),
             Center(child: Image.network(word.imageUrl, height: 150)),
             const SizedBox(height: 16),
-            Text(
-              "${word.eng} - ${word.tur}",
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "${word.eng} - ${word.tur}",
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  icon: const Icon(Icons.volume_up, color: Colors.deepPurple),
+                  onPressed: () => ttsService.speak(word.eng),
+                ),
+              ],
             ),
             const SizedBox(height: 8),
             const Text(
               "Örnekler:",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            ...word.samples.map((e) => Text("- $e")),
+            const SizedBox(height: 4),
+            ...word.samples.map(
+              (sample) => Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("• "),
+                  Expanded(child: Text(sample)),
+                  IconButton(
+                    icon: const Icon(Icons.volume_up, size: 18),
+                    onPressed: () => ttsService.speak(sample),
+                  ),
+                ],
+              ),
+            ),
             const Spacer(),
             ElevatedButton.icon(
               onPressed: () => _submitAnswer(true),

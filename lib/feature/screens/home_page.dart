@@ -1,13 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_word_game/feature/screens/%20statistic_screen.dart';
+import 'package:flutter_word_game/feature/screens/puzzle_screen.dart';
 import 'package:flutter_word_game/feature/screens/rewiew_today_screen.dart';
+import 'package:flutter_word_game/feature/screens/setting_page.dart';
 import 'package:flutter_word_game/feature/screens/word_add_page.dart';
+import 'package:flutter_word_game/feature/screens/word_chain_screen.dart';
 import 'package:flutter_word_game/feature/screens/word_listen_screen.dart';
 import 'package:flutter_word_game/feature/screens/quiz_screen.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../core/services/firestore_service.dart';
-import '../models/word.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,7 +43,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _startQuiz(BuildContext context) async {
-    final firestoreService = FirestoreService(uid: user.uid); // ✅ GÜNCELLENDİ
+    final firestoreService = FirestoreService(uid: user.uid);
     final todayWords = await firestoreService.getTodayReviewWords();
 
     if (todayWords.isEmpty) {
@@ -53,6 +56,27 @@ class _HomePageState extends State<HomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => QuizScreen(words: todayWords)),
+    );
+  }
+
+  Future<void> _openStatistics(BuildContext context) async {
+    final firestoreService = FirestoreService(uid: user.uid);
+    final words = await firestoreService.getAllWords();
+
+    final total = words.length;
+    final correct = words.fold(0, (sum, word) => sum + word.successCount);
+    final incorrect = words.fold(0, (sum, word) => sum + word.failCount);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder:
+            (_) => StatisticsScreen(
+              total: total,
+              correct: correct,
+              incorrect: incorrect,
+            ),
+      ),
     );
   }
 
@@ -88,9 +112,7 @@ class _HomePageState extends State<HomePage> {
               onTap:
                   () => Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const WordAddScreen(),
-                    ),
+                    MaterialPageRoute(builder: (_) => const WordAddScreen()),
                   ),
             ),
             const SizedBox(height: 16),
@@ -101,9 +123,7 @@ class _HomePageState extends State<HomePage> {
               onTap:
                   () => Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const WordListScreen(),
-                    ),
+                    MaterialPageRoute(builder: (_) => const WordListScreen()),
                   ),
             ),
             const SizedBox(height: 16),
@@ -115,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                   () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ReviewTodayScreen(),
+                      builder: (_) => const ReviewTodayScreen(),
                     ),
                   ),
             ),
@@ -125,6 +145,45 @@ class _HomePageState extends State<HomePage> {
               icon: Icons.play_arrow,
               label: "Quiz'e Başla",
               onTap: () => _startQuiz(context),
+            ),
+            const SizedBox(height: 16),
+
+            _buildButton(
+              icon: Icons.bar_chart,
+              label: "İstatistik Raporu",
+              onTap: () => _openStatistics(context),
+            ),
+            const SizedBox(height: 16),
+
+            _buildButton(
+              icon: Icons.settings,
+              label: "Ayarlar",
+              onTap:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                  ),
+            ),
+            const SizedBox(height: 16),
+            _buildButton(
+              icon: Icons.extension,
+              label: "Bulmaca Modülü",
+              onTap:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const PuzzleScreen()),
+                  ),
+            ),
+            const SizedBox(height: 16),
+            _buildButton(
+              icon: Icons.auto_stories,
+              label: "Word Chain",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const WordChainScreen()),
+                );
+              },
             ),
           ],
         ),

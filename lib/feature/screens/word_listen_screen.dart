@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_word_game/core/tts_service.dart';
 import '../models/word.dart';
 
 class WordListScreen extends StatelessWidget {
@@ -23,6 +24,8 @@ class WordListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ttsService = TextToSpeechService(); // 🔈 TTS servisi
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("📚 Kayıtlı Kelimeler"),
@@ -89,6 +92,10 @@ class WordListScreen extends StatelessWidget {
                         style: const TextStyle(fontStyle: FontStyle.italic),
                       ),
                     ],
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.volume_up),
+                    onPressed: () => ttsService.speak(word.eng),
                   ),
                 ),
               );
