@@ -12,15 +12,15 @@ class CustomTextField extends StatelessWidget {
     this.hasForgotPassword = false,
     required this.controller,
     this.errorText,
-    this.suffixIcon, 
+    this.suffixIcon,
   });
 
   final String hintText;
   final bool isPassword;
   final bool hasForgotPassword;
   final TextEditingController controller;
-  final String? errorText; 
-  final IconData? suffixIcon; 
+  final String? errorText;
+  final IconData? suffixIcon;
 
   //Box Decorationlar için ortak bir yapı oluşturdum.
   @override

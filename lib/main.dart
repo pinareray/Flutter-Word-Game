@@ -5,29 +5,29 @@ import 'package:flutter_word_game/feature/screens/login /login_page.dart';
 import 'package:flutter_word_game/feature/screens/login /register_page.dart';
 import 'package:flutter_word_game/feature/screens/login /splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart'; 
-import 'package:flutter_word_game/feature/screens/home/word_add_page.dart';
+import 'package:flutter_word_game/feature/screens/word_listen_screen.dart';
+import 'firebase_options.dart';
+import 'package:flutter_word_game/feature/screens/word_add_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform, 
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Kelime Ezber Uygulaması',
       theme: ThemeData(
+        useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: WordAddScreen(),
+      home: const AuthService(),
     );
   }
 }

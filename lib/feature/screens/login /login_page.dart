@@ -96,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                 CustomTextField(
                   controller: _userNameController,
                   hintText: LoginPageTexts.userNameOrEmail,
-                  suffixIcon: Icons.email, 
+                  suffixIcon: Icons.email,
                 ),
                 SizedBoxUtils.smallBox,
 
@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: AppTexts.password,
                   isPassword: true,
                   hasForgotPassword: true,
-                  suffixIcon: Icons.lock, 
+                  suffixIcon: Icons.lock,
                 ),
 
                 SizedBoxUtils.mediumBox,

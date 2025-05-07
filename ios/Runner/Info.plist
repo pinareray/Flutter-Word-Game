@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!-- 📸 Galeri/Kamera erişim izinleri -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Kelimeye görsel eklemek için galeriye erişim izni gerekiyor.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Kelimeye fotoğraf eklemek için kamerayı kullanmamız gerekiyor.</string>
 </dict>
 </plist>

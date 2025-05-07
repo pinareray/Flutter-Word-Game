@@ -1,0 +1,199 @@
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import '../../core/services/firestore_service.dart';
+import '../models/word.dart';
+
+class WordAddScreen extends StatefulWidget {
+  const WordAddScreen({super.key});
+
+  @override
+  State<WordAddScreen> createState() => _WordAddScreenState();
+}
+
+class _WordAddScreenState extends State<WordAddScreen> {
+  final engController = TextEditingController();
+  final turController = TextEditingController();
+  final samplesController = TextEditingController();
+  File? _selectedImage;
+  bool _isSaving = false;
+  late FirestoreService firestoreService;
+
+  @override
+  void initState() {
+    super.initState();
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      firestoreService = FirestoreService(uid: uid);
+    }
+  }
+
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery);
+    if (picked != null) {
+      setState(() {
+        _selectedImage = File(picked.path);
+      });
+    }
+  }
+
+  Future<String> uploadImageToFirebase(File imageFile, String fileName) async {
+    final ref = FirebaseStorage.instance.ref().child('word_images/$fileName');
+    final uploadTask = await ref.putFile(imageFile);
+    final snapshot = await uploadTask;
+    return await snapshot.ref.getDownloadURL();
+  }
+
+  Future<bool> isWordAlreadyExists(String eng) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) return false;
+
+    final snapshot =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .collection('words')
+            .where('eng', isEqualTo: eng.trim())
+            .get();
+
+    return snapshot.docs.isNotEmpty;
+  }
+
+  void saveWord() async {
+    if (_isSaving) return;
+    setState(() => _isSaving = true);
+
+    if (engController.text.isEmpty ||
+        turController.text.isEmpty ||
+        samplesController.text.isEmpty ||
+        _selectedImage == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Tüm alanları ve görseli doldurmalısınız."),
+        ),
+      );
+      setState(() => _isSaving = false);
+      return;
+    }
+
+    if (await isWordAlreadyExists(engController.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("❗ Bu kelime zaten eklenmiş.")),
+      );
+      setState(() => _isSaving = false);
+      return;
+    }
+
+    try {
+      final id = const Uuid().v4();
+      final fileName = '${engController.text.trim().toLowerCase()}_$id.jpg';
+      final imageUrl = await uploadImageToFirebase(_selectedImage!, fileName);
+      final now = DateTime.now();
+
+      final newWord = Word(
+        id: id,
+        eng: engController.text.trim(),
+        tur: turController.text.trim(),
+        samples:
+            samplesController.text.split(',').map((e) => e.trim()).toList(),
+        imageUrl: imageUrl,
+        audioUrl: null,
+        repeatCount: 0,
+        nextReviewAt: now.add(const Duration(days: 1)),
+        successCount: 0,
+        failCount: 0,
+        lastSeen: now,
+      );
+
+      await firestoreService.addWord(newWord);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("✅ Kelime başarıyla eklendi.")),
+      );
+
+      engController.clear();
+      turController.clear();
+      samplesController.clear();
+      setState(() => _selectedImage = null);
+    } catch (e) {
+      print("❌ HATA: $e");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Bir hata oluştu: $e")));
+    } finally {
+      setState(() => _isSaving = false);
+    }
+  }
+
+  @override
+  void dispose() {
+    engController.dispose();
+    turController.dispose();
+    samplesController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Yeni Kelime Ekle")),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextField(
+                controller: engController,
+                decoration: const InputDecoration(
+                  labelText: "İngilizce Kelime",
+                ),
+              ),
+              TextField(
+                controller: turController,
+                decoration: const InputDecoration(labelText: "Türkçe Karşılık"),
+              ),
+              TextField(
+                controller: samplesController,
+                decoration: const InputDecoration(
+                  labelText: "Örnek Cümleler (virgülle ayır)",
+                ),
+              ),
+              const SizedBox(height: 16),
+              _selectedImage != null
+                  ? Image.file(_selectedImage!, height: 150)
+                  : const Text("Henüz görsel seçilmedi."),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: pickImage,
+                child: const Text("Görsel Seç"),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _isSaving ? null : saveWord,
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(45),
+                ),
+                child:
+                    _isSaving
+                        ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                        : const Text("Kelimeyi Kaydet"),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -30,9 +30,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            content: Text(ForgotPasswordTexts.resetSuccess), 
-          );
+          return AlertDialog(content: Text(ForgotPasswordTexts.resetSuccess));
         },
       );
     } on FirebaseAuthException catch (e) {
@@ -41,7 +39,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            content: Text(e.message ?? ForgotPasswordTexts.resetError), 
+            content: Text(e.message ?? ForgotPasswordTexts.resetError),
           );
         },
       );
@@ -57,7 +55,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            ForgotPasswordTexts.pageInstruction, 
+            ForgotPasswordTexts.pageInstruction,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: Numbers.medium),
           ),
@@ -70,7 +68,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           SizedBoxUtils.smallBox,
           MaterialButton(
             onPressed: passwordReset,
-            child: Text(ForgotPasswordTexts.resetButton), 
+            child: Text(ForgotPasswordTexts.resetButton),
             color: ColorUtils.lightBlue,
           ),
         ],

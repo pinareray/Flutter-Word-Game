@@ -5,6 +5,11 @@ class Word {
   final List<String> samples;
   final String imageUrl;
   final String? audioUrl;
+  final int repeatCount; // 🔁 Tekrar algoritması için
+  final int successCount; // ✅ Toplam doğru sayısı
+  final int failCount; // ❌ Toplam yanlış sayısı
+  final DateTime nextReviewAt; // ⏱ Ne zaman tekrar edilecek
+  final DateTime lastSeen; // 👁️ En son ne zaman gösterildi
 
   Word({
     required this.id,
@@ -13,6 +18,11 @@ class Word {
     required this.samples,
     required this.imageUrl,
     this.audioUrl,
+    required this.repeatCount,
+    required this.successCount,
+    required this.failCount,
+    required this.nextReviewAt,
+    required this.lastSeen,
   });
 
   Map<String, dynamic> toMap() {
@@ -23,6 +33,11 @@ class Word {
       'samples': samples,
       'imageUrl': imageUrl,
       'audioUrl': audioUrl,
+      'repeatCount': repeatCount,
+      'successCount': successCount,
+      'failCount': failCount,
+      'nextReviewAt': nextReviewAt.toIso8601String(),
+      'lastSeen': lastSeen.toIso8601String(),
     };
   }
 
@@ -34,6 +49,11 @@ class Word {
       samples: List<String>.from(map['samples']),
       imageUrl: map['imageUrl'],
       audioUrl: map['audioUrl'],
+      repeatCount: map['repeatCount'] ?? 0,
+      successCount: map['successCount'] ?? 0,
+      failCount: map['failCount'] ?? 0,
+      nextReviewAt: DateTime.parse(map['nextReviewAt']),
+      lastSeen: DateTime.parse(map['lastSeen']),
     );
   }
 }
