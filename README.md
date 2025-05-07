@@ -23,12 +23,20 @@ Not: Kayıt, giriş, kelime ekleme, oyun gibi çalışma sırasında yapılan ya
 - Firebase Storage
 
 
-## 📸 Ekran Görüntüleri
+### 🖼️ Ekran Görüntüleri
 
->  Ana ekran (assets/screenshots/home.jpeg)
->  Word ekranı (assets/screenshots/words.jpeg)
->  Login ekranı (assets/screenshots/login.jpeg)
->  Puzzle ekranı (assets/screenshots/puzzle.jpeg)
+#### Ana Sayfa
+![Ana Sayfa](assets/screenshots/home.jpeg)
+
+#### Word Ekranı
+![Word Ekranı](assets/screenshots/words.jpeg)
+
+#### Login Ekranı
+![Login Ekranı](assets/screenshots/login.jpeg)
+
+#### Puzzle Ekranı
+![Puzzle Ekranı](assets/screenshots/puzzle.jpeg)
+
 
 ## 🧪 Kurulum
 
