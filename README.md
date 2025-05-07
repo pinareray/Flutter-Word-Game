@@ -26,16 +26,10 @@ Not: Kayıt, giriş, kelime ekleme, oyun gibi çalışma sırasında yapılan ya
 ### 🖼️ Ekran Görüntüleri
 
 #### Ana Sayfa
-![Ana Sayfa](assets/screenshots/home.jpeg)
 
-#### Word Ekranı
-![Word Ekranı](assets/screenshots/words.jpeg)
+| <img src="assets/screenshots/home.jpeg" width="250"/> | <img src="assets/screenshots/words.jpeg" width="250"/> | <img src="assets/screenshots/login.jpeg" width="250"/> | <img src="assets/screenshots/puzzle.jpeg" width="250"/> |
 
-#### Login Ekranı
-![Login Ekranı](assets/screenshots/login.jpeg)
 
-#### Puzzle Ekranı
-![Puzzle Ekranı](assets/screenshots/puzzle.jpeg)
 
 
 ## 🧪 Kurulum
