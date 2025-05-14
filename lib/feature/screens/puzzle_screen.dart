@@ -12,6 +12,7 @@ class PuzzleScreen extends StatefulWidget {
 }
 
 class _PuzzleScreenState extends State<PuzzleScreen> {
+  String _message = 'Öğrenilen kelime bulunamadı';
   late FirestoreService firestoreService;
   List<List<String>> grid = List.generate(
     5,
@@ -37,13 +38,16 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
     final allWords = await firestoreService.getAllWords();
     learnedWords =
         allWords
-            .where((w) => w.successCount >= 6 && w.eng.length == 5)
+            .where(
+              (w) =>
+                  w.successCount >= 6 && w.eng.length >= 2 && w.eng.length <= 5,
+            )
             .map((w) => w.eng.toUpperCase())
             .toList();
 
     if (learnedWords.isEmpty) {
       setState(() {
-        message = '📭 Öğrenilen 5 harfli kelime bulunamadı';
+        message = _message;
         isLoading = false;
       });
       return;
@@ -60,21 +64,19 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
     final row = rand.nextInt(5);
     final col = rand.nextInt(5 - word.length + 1);
 
-    if (horizontal) {
-      for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
-          grid[i][j] = String.fromCharCode(65 + rand.nextInt(26));
-        }
+    // Puzzle rastgele harflerle dolduruluyor
+    for (int i = 0; i < 5; i++) {
+      for (int j = 0; j < 5; j++) {
+        grid[i][j] = String.fromCharCode(65 + rand.nextInt(26));
       }
+    }
+
+    // Hedef kelimeyi yerleştir
+    if (horizontal) {
       for (int i = 0; i < word.length; i++) {
         grid[row][col + i] = word[i];
       }
     } else {
-      for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
-          grid[i][j] = String.fromCharCode(65 + rand.nextInt(26));
-        }
-      }
       for (int i = 0; i < word.length; i++) {
         grid[col + i][row] = word[i];
       }

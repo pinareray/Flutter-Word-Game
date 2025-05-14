@@ -5,11 +5,11 @@ class Word {
   final List<String> samples;
   final String imageUrl;
   final String? audioUrl;
-  final int repeatCount; // 🔁 Tekrar algoritması için
-  final int successCount; // ✅ Toplam doğru sayısı
-  final int failCount; // ❌ Toplam yanlış sayısı
-  final DateTime nextReviewAt; // ⏱ Ne zaman tekrar edilecek
-  final DateTime lastSeen; // 👁️ En son ne zaman gösterildi
+  final int repeatCount; // Tekrar algoritması için
+  final int successCount; //  Toplam doğru sayısı
+  final int failCount; //  Toplam yanlış sayısı
+  final DateTime nextReviewAt; //  Ne zaman tekrar edilecek
+  final DateTime lastSeen; //  En son ne zaman gösterildi
 
   Word({
     required this.id,

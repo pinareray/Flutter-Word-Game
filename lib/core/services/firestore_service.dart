@@ -16,7 +16,7 @@ class FirestoreService {
       .collection('settings')
       .doc('preferences');
 
-  /// Yeni kelime ekler
+  /// Yeni kelime ekleme
   Future<void> addWord(Word word) async {
     try {
       await _userWordsRef.doc(word.id).set(word.toMap());

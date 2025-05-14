@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_word_game/product/components/custom_text_field.dart';
 import 'package:flutter_word_game/product/constants/texts/app_text.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
-import 'package:flutter_word_game/product/constants/texts/login_page_text.dart';
 import 'package:flutter_word_game/product/constants/size_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -48,11 +47,11 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder:
             (context) => AlertDialog(
-              title: Text(LoginPageTexts.errorTitle),
+              title: const Text(LoginPageTexts.errorTitle),
               content: Text(message),
               actions: [
                 TextButton(
-                  child: Text(LoginPageTexts.okButton),
+                  child: const Text(LoginPageTexts.okButton),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
               ],
@@ -79,13 +78,13 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.account_circle_sharp, size: Numbers.xLarge),
+                const Icon(Icons.account_circle_sharp, size: Numbers.xLarge),
                 Text(
                   LoginPageTexts.welcomeMessage,
                   style: GoogleFonts.fahkwang(fontSize: Numbers.mediumTree),
                 ),
                 SizedBoxUtils.smallBox,
-                Text(
+                const Text(
                   LoginPageTexts.subMessage,
                   style: TextStyle(fontSize: Numbers.small),
                   textAlign: TextAlign.center,
@@ -95,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                 // Kullanıcı adı textfield
                 CustomTextField(
                   controller: _userNameController,
-                  hintText: LoginPageTexts.userNameOrEmail,
+                  hintText: AppTexts.email,
                   suffixIcon: Icons.email,
                 ),
                 SizedBoxUtils.smallBox,
@@ -122,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                         color: ColorUtils.lightBlue,
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           AppTexts.signInText,
                           style: TextStyle(
@@ -139,10 +138,10 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(LoginPageTexts.signUpQuestionText),
+                    const Text(LoginPageTexts.signUpQuestionText),
                     GestureDetector(
                       onTap: widget.showRegisterPage,
-                      child: Text(
+                      child: const Text(
                         LoginPageTexts.signUpText,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_word_game/feature/screens/login%20/forgot_password_page.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
-import 'package:flutter_word_game/product/constants/texts/login_page_text.dart';
+import 'package:flutter_word_game/product/constants/texts/app_text.dart';
 import 'package:flutter_word_game/product/constants/size_utils.dart';
 
 class CustomTextField extends StatelessWidget {

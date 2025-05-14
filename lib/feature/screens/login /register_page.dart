@@ -1,23 +1,21 @@
-// GÜNCELLENMİŞ RegisterPage (register_page.dart)
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_word_game/product/components/custom_text_field.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
 import 'package:flutter_word_game/product/constants/texts/app_text.dart';
-import 'package:flutter_word_game/product/constants/texts/register_page_text.dart';
 import 'package:flutter_word_game/product/constants/size_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterPage extends StatefulWidget {
-  final VoidCallback showLoginPage;
+  final VoidCallback showLoginPage; //Giriş sayfasına geçmek için kullanırız.
   const RegisterPage({super.key, required this.showLoginPage});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
+//Kullanıcıdan aldığımız verileri kontrol ediyoruz.
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
@@ -25,6 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  //Sayfa kapandığında bellek bu sayede temizlenir.
   @override
   void dispose() {
     _emailController.dispose();
@@ -34,8 +33,9 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
+  //E- posta formatı doğrumu diye kontrol eder.
   bool isValidEmail(String email) {
-    return RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}\$").hasMatch(email);
+    return RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(email);
   }
 
   Future signUp() async {
@@ -44,35 +44,42 @@ class _RegisterPageState extends State<RegisterPage> {
     final password = _passwordController.text.trim();
 
     if (userName.isEmpty) {
-      _showDialog('Eksik Bilgi', 'Kullanıcı adı boş olamaz.');
+      _showDialog(
+        RegisterPageText.emptyUsernameTitle,
+        RegisterPageText.emptyUsernameMessage,
+      );
       return;
     }
 
     if (!isValidEmail(email)) {
       _showDialog(
-        'Geçersiz E-posta',
-        'Lütfen geçerli bir e-posta adresi girin.',
+        LoginPageTexts.invalidEmail,
+        LoginPageTexts.invalidEmailMessage,
       );
       return;
     }
 
     if (password.length < 6) {
-      _showDialog('Zayıf Şifre', 'Şifre en az 6 karakter olmalıdır.');
+      _showDialog(AppTexts.weakPassword, RegisterPageText.shortPasswordMessage);
       return;
     }
 
     if (!passwordConfirmed()) {
-      _showDialog('Şifre Hatası', 'Şifreler uyuşmuyor.');
+      _showDialog(
+        RegisterPageText.passwordMismatchTitle,
+        RegisterPageText.passwordMismatchMessage,
+      );
       return;
     }
 
     try {
+      // Firebase Auth ile kullanıcı oluşturuyorum
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
       String uid = userCredential.user!.uid;
 
-      // Kullanıcı bilgilerini Firestore'a kaydet
+      // Kullanıcı bilgilerini Firestore'a kaydettim
       await FirebaseFirestore.instance.collection('users').doc(uid).set({
         'userID': uid,
         'userName': userName,
@@ -80,18 +87,25 @@ class _RegisterPageState extends State<RegisterPage> {
         'createdAt': Timestamp.now(),
       });
 
-      _showDialog('Başarılı', 'Kayıt başarıyla tamamlandı.');
+      _showDialog(AppTexts.succesful, RegisterPageText.succesfulMessage);
 
+      //Giriş ekranına yönlendiriyoruz.
       Future.delayed(const Duration(seconds: 2), () {
         widget.showLoginPage();
       });
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        _showDialog('Kayıt Hatası', 'Bu e-posta adresi zaten kullanımda.');
+      if (e.code == 'email-already-in-use') { //E-posta kayıtlı mı? kontrol ettim
+        _showDialog(
+          LoginPageTexts.registrationError,
+          RegisterPageText.existingEmail,
+        );
       } else {
-        _showDialog('Hata', e.message ?? 'Bilinmeyen bir hata oluştu.');
+        _showDialog(
+          LoginPageTexts.error,
+          e.message ?? LoginPageTexts.unkownError,
+        );
       }
-    } catch (e) {
+    } catch (e) { //Firebase dışı hata olursa terminale yazdırıp görüyoruz.
       print("Genel Hata: \$e");
     }
   }
@@ -110,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
             content: Text(message),
             actions: [
               TextButton(
-                child: const Text("Tamam"),
+                child: const Text(LoginPageTexts.okButton),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ],
@@ -128,15 +142,15 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.create, size: Numbers.xLarge),
+                const Icon(Icons.create, size: Numbers.xLarge),
                 Text(
                   RegisterPageText.newAccountMessage,
                   style: GoogleFonts.fahkwang(fontSize: Numbers.medium),
                 ),
                 SizedBoxUtils.smallBox,
-                Text(
+                const Text(
                   RegisterPageText.subMessage,
-                  style: const TextStyle(fontSize: Numbers.small),
+                  style: TextStyle(fontSize: Numbers.small),
                   textAlign: TextAlign.center,
                 ),
                 SizedBoxUtils.smallBox,
@@ -176,10 +190,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         color: ColorUtils.lightBlue,
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           RegisterPageText.signUpMessage,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: Numbers.small,
                           ),
@@ -191,10 +205,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(RegisterPageText.loginQuestionMessage),
+                    const Text(RegisterPageText.loginQuestionMessage),
                     GestureDetector(
                       onTap: widget.showLoginPage,
-                      child: Text(
+                      child: const Text(
                         AppTexts.signInText,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,

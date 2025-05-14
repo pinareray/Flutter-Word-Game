@@ -1,0 +1,6 @@
+projectKey=flutter_word_game
+serverUrl=http://localhost:9000
+serverVersion=25.5.0.107428
+dashboardUrl=http://localhost:9000/dashboard?id=flutter_word_game
+ceTaskId=0abcc520-1b2c-45eb-ac2d-3aae1f251b7f
+ceTaskUrl=http://localhost:9000/api/ce/task?id=0abcc520-1b2c-45eb-ac2d-3aae1f251b7f

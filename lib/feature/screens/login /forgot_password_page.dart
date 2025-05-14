@@ -4,7 +4,6 @@ import 'package:flutter_word_game/product/components/custom_text_field.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
 import 'package:flutter_word_game/product/constants/size_utils.dart';
 import 'package:flutter_word_game/product/constants/texts/app_text.dart';
-import 'package:flutter_word_game/product/constants/texts/login_page_text.dart'; // 🔹 yeni eklenen metin dosyası
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -54,21 +53,23 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             ForgotPasswordTexts.pageInstruction,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: Numbers.medium),
           ),
           SizedBoxUtils.smallBox,
+
           CustomTextField(
             hintText: AppTexts.email,
             controller: _emailController,
             suffixIcon: Icons.email,
           ),
           SizedBoxUtils.smallBox,
+
           MaterialButton(
             onPressed: passwordReset,
-            child: Text(ForgotPasswordTexts.resetButton),
+            child: const Text(ForgotPasswordTexts.resetButton),
             color: ColorUtils.lightBlue,
           ),
         ],

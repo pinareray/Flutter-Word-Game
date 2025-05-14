@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_word_game/product/constants/size_utils.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -17,7 +18,7 @@ class PdfService {
         build: (pw.Context context) => pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
-            pw.Text("Kelime Ezberleme Başarı Raporu", style: pw.TextStyle(fontSize: 20)),
+            pw.Text("Kelime Ezberleme Başarı Raporu", style: pw.TextStyle(fontSize: Numbers.medium)),
             pw.SizedBox(height: 20),
             pw.Text("Toplam kelime sayısı: $total"),
             pw.Text("Doğru cevap sayısı: $correct"),

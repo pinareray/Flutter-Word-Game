@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_word_game/core/tts_service.dart';
+import 'package:flutter_word_game/core/services/tts_service.dart';
 import '../models/word.dart';
 
 class WordListScreen extends StatelessWidget {

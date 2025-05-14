@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_word_game/core/services/firestore_service.dart';
-import 'package:flutter_word_game/core/tts_service.dart';
+import 'package:flutter_word_game/core/services/tts_service.dart';
 import 'package:flutter_word_game/feature/models/word.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 

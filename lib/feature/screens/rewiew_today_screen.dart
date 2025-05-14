@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_word_game/core/tts_service.dart';
+import 'package:flutter_word_game/core/services/tts_service.dart';
 import '../../core/services/firestore_service.dart';
 import '../models/word.dart';
 import 'quiz_screen.dart';
