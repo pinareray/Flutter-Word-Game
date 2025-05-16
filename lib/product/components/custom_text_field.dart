@@ -62,12 +62,12 @@ class CustomTextField extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return ForgotPasswordPage();
+                        return const ForgotPasswordPage();
                       },
                     ),
                   );
                 },
-                child: Text(
+                child: const Text(
                   LoginPageTexts.forgotpassword,
                   style: TextStyle(
                     color: ColorUtils.lightBlue,

@@ -1,10 +1,20 @@
 class AppTexts {
+  static const String welcome = 'Hoş geldin';
+  static const String wordGame = '🎮 Kelime Oyunu';
   static const String userName = 'Kullanıcı Adı';
   static const String password = 'Şifre';
   static const String email = 'Email';
   static const String signInText = 'Giriş Yap';
   static const String succesful = 'Başarılı';
   static const String weakPassword = 'Zayıf Şifre';
+  static const String addWord = 'Kelime Ekle';
+  static const String listWord = 'Kelime Listele';
+  static const String repeatToday = 'Bugünkü Tekrarlar';
+  static const String quiz = 'Quiz';
+  static const String istatistic = 'İstatistik';
+  static const String puzzle = 'Bulmaca';
+  static const String wordChain = 'Word Chain (Hikaye)';
+  static const String settings = 'Ayarlar';
 }
 
 class LoginPageTexts {
@@ -57,3 +67,18 @@ class RegisterPageText {
   static const String passwordMismatchTitle = 'Şifre Hatası';
   static const String passwordMismatchMessage = 'Şifreler uyuşmuyor.';
 }
+
+class WordAddTexts {
+  static const String newWord = "Yeni Kelime Ekle";
+  static const String englishLabel = "İngilizce Kelime";
+  static const String turkishLabel = "Türkçe Karşılık";
+  static const String sampleLabel = "Örnek Cümleler (virgülle ayır)";
+  static const String noImageSelected = "Henüz görsel seçilmedi.";
+  static const String pickImage = "Görsel Seç";
+  static const String saveWord = "Kelimeyi Kaydet";
+  static const String fillAllFields = "Tüm alanları ve görseli doldurmalısınız.";
+  static const String duplicateWord = "❗ Bu kelime zaten eklenmiş.";
+  static const String success = "✅ Kelime başarıyla eklendi.";
+  static const String error = "Bir hata oluştu:";
+}
+

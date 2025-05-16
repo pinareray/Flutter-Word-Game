@@ -10,6 +10,8 @@ import 'package:flutter_word_game/feature/screens/word_listen_screen.dart';
 import 'package:flutter_word_game/feature/screens/quiz_screen.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_word_game/product/constants/texts/app_text.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../core/services/firestore_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -84,8 +86,15 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ana Sayfa"),
         backgroundColor: ColorUtils.appbarColor,
+        title: Text(
+          '${AppTexts.wordGame}',
+          style: GoogleFonts.permanentMarker(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -95,95 +104,89 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/game.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Giriş yaptınız: ${userName ?? user.email}',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            SizedBox(height: 35),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                '${AppTexts.welcome}, ${userName ?? user.email}',
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-            const SizedBox(height: 30),
-
-            _buildButton(
-              icon: Icons.add,
-              label: "Kelime Ekle",
-              onTap:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const WordAddScreen()),
+            const SizedBox(height: 10),
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                mainAxisSpacing: 16,
+                crossAxisSpacing: 16,
+                children: [
+                  _buildGameCard(Icons.add, AppTexts.addWord, () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const WordAddScreen()),
+                    );
+                  }),
+                  _buildGameCard(Icons.list, AppTexts.listWord, () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const WordListScreen()),
+                    );
+                  }),
+                  _buildGameCard(Icons.repeat, AppTexts.repeatToday, () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ReviewTodayScreen(),
+                      ),
+                    );
+                  }),
+                  _buildGameCard(
+                    Icons.play_arrow,
+                    AppTexts.quiz,
+                    () => _startQuiz(context),
                   ),
-            ),
-            const SizedBox(height: 16),
-
-            _buildButton(
-              icon: Icons.list,
-              label: "Kelimeleri Listele",
-              onTap:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const WordListScreen()),
+                  _buildGameCard(
+                    Icons.bar_chart,
+                    AppTexts.istatistic,
+                    () => _openStatistics(context),
                   ),
-            ),
-            const SizedBox(height: 16),
-
-            _buildButton(
-              icon: Icons.repeat,
-              label: "Bugünkü Tekrarlar",
-              onTap:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const ReviewTodayScreen(),
-                    ),
-                  ),
-            ),
-            const SizedBox(height: 16),
-
-            _buildButton(
-              icon: Icons.play_arrow,
-              label: "Quiz'e Başla",
-              onTap: () => _startQuiz(context),
-            ),
-            const SizedBox(height: 16),
-
-            _buildButton(
-              icon: Icons.bar_chart,
-              label: "İstatistik Raporu",
-              onTap: () => _openStatistics(context),
-            ),
-            const SizedBox(height: 16),
-
-            _buildButton(
-              icon: Icons.settings,
-              label: "Ayarlar",
-              onTap:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const SettingsScreen()),
-                  ),
-            ),
-            const SizedBox(height: 16),
-            _buildButton(
-              icon: Icons.extension,
-              label: "Bulmaca Modülü",
-              onTap:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const PuzzleScreen()),
-                  ),
-            ),
-            const SizedBox(height: 16),
-            _buildButton(
-              icon: Icons.auto_stories,
-              label: "Word Chain",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const WordChainScreen()),
-                );
-              },
+                  _buildGameCard(Icons.extension, AppTexts.puzzle, () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const PuzzleScreen()),
+                    );
+                  }),
+                  _buildGameCard(Icons.auto_stories, AppTexts.wordChain, () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const WordChainScreen(),
+                      ),
+                    );
+                  }),
+                  _buildGameCard(Icons.settings, AppTexts.settings, () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                    );
+                  }),
+                ],
+              ),
             ),
           ],
         ),
@@ -191,19 +194,30 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildButton({
-    required IconData icon,
-    required String label,
-    required VoidCallback onTap,
-  }) {
-    return ElevatedButton.icon(
-      onPressed: onTap,
-      icon: Icon(icon),
-      label: Text(label),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: ColorUtils.appColor,
-        minimumSize: const Size.fromHeight(45),
-        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+  Widget _buildGameCard(IconData icon, String title, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        color: Colors.deepPurple.shade300,
+        elevation: 6,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: 40, color: Colors.white),
+              const SizedBox(height: 10),
+              Text(
+                title,
+                style: GoogleFonts.fredoka(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -147,14 +147,14 @@ class _QuizScreenState extends State<QuizScreen> {
             ElevatedButton.icon(
               onPressed: () => _submitAnswer(true),
               icon: const Icon(Icons.check_circle, color: Colors.white),
-              label: const Text("Biliyordum"),
+              label: const Text("Biliyorum"),
               style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
             ),
             const SizedBox(height: 12),
             ElevatedButton.icon(
               onPressed: () => _submitAnswer(false),
               icon: const Icon(Icons.cancel, color: Colors.white),
-              label: const Text("Bilmiyordum"),
+              label: const Text("Bilmiyorum"),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.redAccent,
               ),

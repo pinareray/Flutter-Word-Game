@@ -2,6 +2,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_word_game/product/components/custom_text_field.dart';
+import 'package:flutter_word_game/product/constants/color_utils.dart';
+import 'package:flutter_word_game/product/constants/texts/app_text.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -72,19 +75,17 @@ class _WordAddScreenState extends State<WordAddScreen> {
         turController.text.isEmpty ||
         samplesController.text.isEmpty ||
         _selectedImage == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Tüm alanları ve görseli doldurmalısınız."),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text(WordAddTexts.fillAllFields)));
       setState(() => _isSaving = false);
       return;
     }
 
     if (await isWordAlreadyExists(engController.text)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("❗ Bu kelime zaten eklenmiş.")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text(WordAddTexts.duplicateWord)));
       setState(() => _isSaving = false);
       return;
     }
@@ -112,9 +113,9 @@ class _WordAddScreenState extends State<WordAddScreen> {
 
       await firestoreService.addWord(newWord);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("✅ Kelime başarıyla eklendi.")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text(WordAddTexts.success)));
 
       engController.clear();
       turController.clear();
@@ -124,7 +125,7 @@ class _WordAddScreenState extends State<WordAddScreen> {
       print("❌ HATA: $e");
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text("Bir hata oluştu: $e")));
+      ).showSnackBar(SnackBar(content: Text("${WordAddTexts.error}: $e")));
     } finally {
       setState(() => _isSaving = false);
     }
@@ -141,36 +142,38 @@ class _WordAddScreenState extends State<WordAddScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Yeni Kelime Ekle")),
+      appBar: AppBar(
+        title: const Text(WordAddTexts.newWord),
+        backgroundColor: ColorUtils.appbarColor,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              TextField(
+              CustomTextField(
+                hintText: WordAddTexts.englishLabel,
                 controller: engController,
-                decoration: const InputDecoration(
-                  labelText: "İngilizce Kelime",
-                ),
+                suffixIcon: Icons.language,
               ),
-              TextField(
+              CustomTextField(
+                hintText: WordAddTexts.turkishLabel,
                 controller: turController,
-                decoration: const InputDecoration(labelText: "Türkçe Karşılık"),
+                suffixIcon: Icons.translate,
               ),
-              TextField(
+              CustomTextField(
+                hintText: WordAddTexts.sampleLabel,
                 controller: samplesController,
-                decoration: const InputDecoration(
-                  labelText: "Örnek Cümleler (virgülle ayır)",
-                ),
+                suffixIcon: Icons.edit,
               ),
               const SizedBox(height: 16),
               _selectedImage != null
                   ? Image.file(_selectedImage!, height: 150)
-                  : const Text("Henüz görsel seçilmedi."),
+                  : const Text(WordAddTexts.noImageSelected),
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: pickImage,
-                child: const Text("Görsel Seç"),
+                child: const Text(WordAddTexts.pickImage),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
@@ -188,7 +191,7 @@ class _WordAddScreenState extends State<WordAddScreen> {
                             strokeWidth: 2,
                           ),
                         )
-                        : const Text("Kelimeyi Kaydet"),
+                        : const Text(WordAddTexts.saveWord),
               ),
             ],
           ),

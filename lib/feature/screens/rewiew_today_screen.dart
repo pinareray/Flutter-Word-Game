@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_word_game/core/services/tts_service.dart';
+import 'package:flutter_word_game/product/constants/color_utils.dart';
 import '../../core/services/firestore_service.dart';
 import '../models/word.dart';
 import 'quiz_screen.dart';
@@ -109,7 +110,7 @@ class _ReviewTodayScreenState extends State<ReviewTodayScreen> {
                   icon: const Icon(Icons.play_arrow),
                   label: const Text("Quiz'e Başla"),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
+                    backgroundColor: ColorUtils.buttonPink,
                     padding: const EdgeInsets.symmetric(
                       vertical: 12,
                       horizontal: 24,

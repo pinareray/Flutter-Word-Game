@@ -48,8 +48,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorUtils.roguePink,
-      appBar: AppBar(backgroundColor: ColorUtils.roguePink, elevation: 0),
+      backgroundColor: ColorUtils.buttonPink,
+      appBar: AppBar(backgroundColor: ColorUtils.buttonPink, elevation: 0),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
