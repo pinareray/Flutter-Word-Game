@@ -87,14 +87,14 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
     final guess = guessController.text.trim().toUpperCase();
 
     if (guess == targetWord) {
-      message = '🎉 Doğru tahmin!';
+      message = 'Doğru tahmin!';
     } else {
-      message = '❌ Yanlış. Doğru kelime: $targetWord';
+      message = 'Yanlış Tahmin. Doğru kelime: $targetWord';
     }
 
     guessController.clear();
 
-    await Future.delayed(const Duration(seconds: 1)); // kısa bir bekleme
+    await Future.delayed(const Duration(seconds: 1)); 
 
     // Yeni kelime seçme ve yeni grid oluşturma
     setState(() {
@@ -112,7 +112,7 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('🍀 Kelime Bulmacası')),
+      appBar: AppBar(title: const Text('Kelime Bulmacası')),
       body:
           isLoading
               ? const Center(child: CircularProgressIndicator())

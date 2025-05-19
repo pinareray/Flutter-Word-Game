@@ -15,6 +15,8 @@ class AppTexts {
   static const String puzzle = 'Bulmaca';
   static const String wordChain = 'Word Chain (Hikaye)';
   static const String settings = 'Ayarlar';
+  static const String backHome = 'Ana Sayfaya Dön.';
+  static const String example = 'Örnekler';
 }
 
 class LoginPageTexts {
@@ -76,9 +78,15 @@ class WordAddTexts {
   static const String noImageSelected = "Henüz görsel seçilmedi.";
   static const String pickImage = "Görsel Seç";
   static const String saveWord = "Kelimeyi Kaydet";
-  static const String fillAllFields = "Tüm alanları ve görseli doldurmalısınız.";
-  static const String duplicateWord = "❗ Bu kelime zaten eklenmiş.";
-  static const String success = "✅ Kelime başarıyla eklendi.";
+  static const String fillAllFields =
+      "Tüm alanları ve görseli doldurmalısınız.";
+  static const String duplicateWord = "Bu kelime zaten eklenmiş.";
+  static const String success = " Kelime başarıyla eklendi.";
   static const String error = "Bir hata oluştu:";
 }
 
+class QuizTexts {
+  static const String quizOver = "Quiz bitti.";
+  static const String noWord = 'Bugün Tekrarlanacak Kelime Yok';
+  static const String quizTime = 'Quiz Zamanı';
+}

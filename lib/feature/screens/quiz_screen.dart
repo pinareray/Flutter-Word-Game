@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_word_game/core/services/firestore_service.dart';
 import 'package:flutter_word_game/core/services/tts_service.dart';
 import 'package:flutter_word_game/feature/models/word.dart';
+import 'package:flutter_word_game/product/constants/color_utils.dart';
+import 'package:flutter_word_game/product/constants/texts/app_text.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -53,7 +55,7 @@ class _QuizScreenState extends State<QuizScreen> {
       barrierDismissible: false,
       builder:
           (_) => AlertDialog(
-            title: const Text("Quiz Bitti!"),
+            title: const Text(QuizTexts.quizOver),
             content: Text(
               "Doğru sayısı: $correctCount / ${widget.words.length}",
             ),
@@ -62,7 +64,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 onPressed: () {
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 },
-                child: const Text("Ana Sayfaya Dön"),
+                child: const Text(AppTexts.backHome),
               ),
             ],
           ),
@@ -73,8 +75,8 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget build(BuildContext context) {
     if (widget.words.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: const Text("Quiz")),
-        body: const Center(child: Text("Bugün tekrarlanacak kelime yok.")),
+        appBar: AppBar(title: const Text(AppTexts.quiz)),
+        body: const Center(child: Text(QuizTexts.noWord)),
       );
     }
 
@@ -83,7 +85,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Quiz Zamanı"),
+        title: const Text(QuizTexts.quizTime),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -97,8 +99,8 @@ class _QuizScreenState extends State<QuizScreen> {
             LinearPercentIndicator(
               lineHeight: 14.0,
               percent: progress,
-              backgroundColor: Colors.grey[300],
-              progressColor: Colors.blueAccent,
+              backgroundColor: ColorUtils.grey,
+              progressColor: ColorUtils.lightBlue,
               center: Text(
                 "%${(progress * 100).round()}",
                 style: const TextStyle(fontSize: 10),
@@ -119,14 +121,14 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
                 const SizedBox(width: 8),
                 IconButton(
-                  icon: const Icon(Icons.volume_up, color: Colors.deepPurple),
+                  icon: const Icon(Icons.volume_up, color: ColorUtils.deepPurple),
                   onPressed: () => ttsService.speak(word.eng),
                 ),
               ],
             ),
             const SizedBox(height: 8),
             const Text(
-              "Örnekler:",
+              AppTexts.example,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
@@ -146,9 +148,14 @@ class _QuizScreenState extends State<QuizScreen> {
             const Spacer(),
             ElevatedButton.icon(
               onPressed: () => _submitAnswer(true),
-              icon: const Icon(Icons.check_circle, color: Colors.white),
+              icon: const Icon(
+                Icons.check_circle,
+                color: ColorUtils.loginWhite,
+              ),
               label: const Text("Biliyorum"),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ColorUtils.trueColor,
+              ),
             ),
             const SizedBox(height: 12),
             ElevatedButton.icon(
@@ -156,7 +163,7 @@ class _QuizScreenState extends State<QuizScreen> {
               icon: const Icon(Icons.cancel, color: Colors.white),
               label: const Text("Bilmiyorum"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.redAccent,
+                backgroundColor: ColorUtils.falseColor,
               ),
             ),
           ],
