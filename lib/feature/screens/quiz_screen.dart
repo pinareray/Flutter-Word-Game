@@ -121,7 +121,10 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
                 const SizedBox(width: 8),
                 IconButton(
-                  icon: const Icon(Icons.volume_up, color: ColorUtils.deepPurple),
+                  icon: const Icon(
+                    Icons.volume_up,
+                    color: ColorUtils.deepPurple,
+                  ),
                   onPressed: () => ttsService.speak(word.eng),
                 ),
               ],
