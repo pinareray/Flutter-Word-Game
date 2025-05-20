@@ -25,7 +25,6 @@ Not: Kayıt, giriş, kelime ekleme, oyun gibi çalışma sırasında yapılan ya
 
 ### 🖼️ Ekran Görüntüleri
 
-#### Ana Sayfa
 
 | <img src="assets/screenshots/wordgame.jpeg" width="250"/> | <img src="assets/screenshots/words.jpeg" width="250"/> | <img src="assets/screenshots/login.jpeg" width="250"/> | <img src="assets/screenshots/puzzle.jpeg" width="250"/> |
 
