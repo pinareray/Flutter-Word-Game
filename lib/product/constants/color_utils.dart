@@ -12,4 +12,5 @@ class ColorUtils {
   static const Color falseColor = Color.fromARGB(255, 220, 30, 13);
   static const Color deepPurple = Color.fromARGB(255, 103, 58, 183);
   static const Color grey = Color.fromARGB(255, 224, 224, 224);
+  static const Color purpleStatistic = Color.fromARGB(255, 210, 188, 249);
 }

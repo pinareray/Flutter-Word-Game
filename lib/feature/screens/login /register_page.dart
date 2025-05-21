@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_word_game/product/components/custom_text_field.dart';
+import 'package:flutter_word_game/product/widgets/custom_text_field.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
 import 'package:flutter_word_game/product/constants/texts/app_text.dart';
 import 'package:flutter_word_game/product/constants/size_utils.dart';
@@ -94,7 +94,8 @@ class _RegisterPageState extends State<RegisterPage> {
         widget.showLoginPage();
       });
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') { //E-posta kayıtlı mı? kontrol ettim
+      if (e.code == 'email-already-in-use') {
+        //E-posta kayıtlı mı? kontrol ettim
         _showDialog(
           LoginPageTexts.registrationError,
           RegisterPageText.existingEmail,
@@ -105,7 +106,8 @@ class _RegisterPageState extends State<RegisterPage> {
           e.message ?? LoginPageTexts.unkownError,
         );
       }
-    } catch (e) { //Firebase dışı hata olursa terminale yazdırıp görüyoruz.
+    } catch (e) {
+      //Firebase dışı hata olursa terminale yazdırıp görüyoruz.
       print("Genel Hata: \$e");
     }
   }
@@ -142,50 +144,50 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.create, size: Numbers.xLarge),
+                const Icon(Icons.create, size: AppSpacing.xl),
                 Text(
                   RegisterPageText.newAccountMessage,
-                  style: GoogleFonts.fahkwang(fontSize: Numbers.medium),
+                  style: GoogleFonts.fahkwang(fontSize: AppSpacing.md),
                 ),
-                SizedBoxUtils.smallBox,
+                AppSizedBoxes.sm,
                 const Text(
                   RegisterPageText.subMessage,
-                  style: TextStyle(fontSize: Numbers.small),
+                  style: TextStyle(fontSize: AppSpacing.sm),
                   textAlign: TextAlign.center,
                 ),
-                SizedBoxUtils.smallBox,
+                AppSizedBoxes.sm,
                 CustomTextField(
                   hintText: AppTexts.userName,
                   controller: _userNameController,
                   suffixIcon: Icons.person,
                 ),
-                SizedBoxUtils.smallBox,
+                AppSizedBoxes.sm,
                 CustomTextField(
                   hintText: AppTexts.email,
                   controller: _emailController,
                   suffixIcon: Icons.email,
                 ),
-                SizedBoxUtils.smallBox,
+                AppSizedBoxes.sm,
                 CustomTextField(
                   hintText: AppTexts.password,
                   controller: _passwordController,
                   isPassword: true,
                   suffixIcon: Icons.lock,
                 ),
-                SizedBoxUtils.smallBox,
+                AppSizedBoxes.sm,
                 CustomTextField(
                   hintText: RegisterPageText.confirmPassword,
                   controller: _confirmPasswordController,
                   isPassword: true,
                   suffixIcon: Icons.lock,
                 ),
-                SizedBoxUtils.mediumBox,
+                AppSizedBoxes.md,
                 Padding(
-                  padding: PaddingUtils.xLargeHorizontal,
+                  padding: AppPaddings.xLargeHorizontal,
                   child: GestureDetector(
                     onTap: signUp,
                     child: Container(
-                      padding: PaddingUtils.smallAll,
+                      padding: AppPaddings.smAll,
                       decoration: BoxDecoration(
                         color: ColorUtils.lightBlue,
                         borderRadius: BorderRadius.circular(20),
@@ -195,7 +197,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           RegisterPageText.signUpMessage,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: Numbers.small,
+                            fontSize: AppSpacing.sm,
                           ),
                         ),
                       ),

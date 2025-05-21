@@ -26,7 +26,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: PaddingUtils.mediumSymetric,
+      padding: AppPaddings.mdHorizontal,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,7 +37,7 @@ class CustomTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Padding(
-              padding: PaddingUtils.xsOnly,
+              padding: AppPaddings.xsLeft,
               child: TextField(
                 controller: controller,
                 obscureText: isPassword,
@@ -55,7 +55,7 @@ class CustomTextField extends StatelessWidget {
           ),
           if (hasForgotPassword == true)
             Padding(
-              padding: PaddingUtils.xsOnly,
+              padding: AppPaddings.xsLeft,
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(

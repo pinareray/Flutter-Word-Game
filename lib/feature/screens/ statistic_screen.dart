@@ -4,6 +4,9 @@ import 'package:flutter_word_game/core/services/firestore_service.dart';
 import 'package:flutter_word_game/core/services/pdf_service.dart';
 import 'package:flutter_word_game/feature/models/word.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter_word_game/product/constants/color_utils.dart';
+import 'package:flutter_word_game/product/constants/size_utils.dart';
+import 'package:flutter_word_game/product/widgets/app_button.dart';
 
 class StatisticsScreen extends StatefulWidget {
   final int total;
@@ -42,7 +45,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text("📊 İstatistik Raporu")),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: AppPaddings.mdAll,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -50,7 +53,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             Text("Toplam Doğru: ${widget.correct}"),
             Text("Toplam Yanlış: ${widget.incorrect}"),
             Text("Başarı Oranı: ${accuracy.toStringAsFixed(1)}%"),
-            const SizedBox(height: 20),
+            AppSizedBoxes.md,
             Expanded(
               child: PieChart(
                 PieChartData(
@@ -58,34 +61,23 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                     PieChartSectionData(
                       value: widget.correct.toDouble(),
                       title: 'Doğru',
-                      color: Colors.green,
+                      color: ColorUtils.trueColor,
                     ),
                     PieChartSectionData(
                       value: widget.incorrect.toDouble(),
                       title: 'Yanlış',
-                      color: Colors.redAccent,
+                      color: ColorUtils.falseColor,
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            AppSizedBoxes.md,
             Center(
-              child: ElevatedButton.icon(
+              child: AppButton(
+                text: "PDF Olarak Dışa Aktar",
+                icon: Icons.picture_as_pdf,
                 onPressed: _exportToPdf,
-                icon: const Icon(Icons.picture_as_pdf),
-                label: const Text("PDF Olarak Dışa Aktar"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 210, 188, 249),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 24,
-                  ),
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
               ),
             ),
           ],

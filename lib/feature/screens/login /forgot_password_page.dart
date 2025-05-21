@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_word_game/product/components/custom_text_field.dart';
+import 'package:flutter_word_game/product/widgets/custom_text_field.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
 import 'package:flutter_word_game/product/constants/size_utils.dart';
 import 'package:flutter_word_game/product/constants/texts/app_text.dart';
@@ -56,20 +56,20 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           const Text(
             ForgotPasswordTexts.pageInstruction,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: Numbers.medium),
+            style: TextStyle(fontSize: AppSpacing.md),
           ),
-          SizedBoxUtils.smallBox,
+          AppSizedBoxes.sm,
 
           CustomTextField(
             hintText: AppTexts.email,
             controller: _emailController,
             suffixIcon: Icons.email,
           ),
-          SizedBoxUtils.smallBox,
+          AppSizedBoxes.sm,
 
           MaterialButton(
             onPressed: passwordReset,
-            child: const Text(ForgotPasswordTexts.resetButton),
+            child:  Text(ForgotPasswordTexts.resetButton),
             color: ColorUtils.lightBlue,
           ),
         ],

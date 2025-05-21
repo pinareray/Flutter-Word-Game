@@ -10,6 +10,7 @@ import 'package:flutter_word_game/feature/screens/word_listen_screen.dart';
 import 'package:flutter_word_game/feature/screens/quiz_screen.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_word_game/product/constants/size_utils.dart';
 import 'package:flutter_word_game/product/constants/texts/app_text.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/services/firestore_service.dart';
@@ -88,7 +89,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: ColorUtils.appbarColor,
         title: Text(
-          '${AppTexts.wordGame}',
+          '🎮 Kelime Oyunu',
           style: GoogleFonts.permanentMarker(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -116,7 +117,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 35),
+            AppSizedBoxes.md3,
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -128,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            AppSizedBoxes.xs1,
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_word_game/product/widgets/app_button.dart';
 import '../../core/services/firestore_service.dart';
 import '../models/word.dart';
 
@@ -64,14 +65,14 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
     final row = rand.nextInt(5);
     final col = rand.nextInt(5 - word.length + 1);
 
-    // Puzzle rastgele harflerle dolduruluyor
+    // Puzzle rastgele harflerle doldurduk
     for (int i = 0; i < 5; i++) {
       for (int j = 0; j < 5; j++) {
         grid[i][j] = String.fromCharCode(65 + rand.nextInt(26));
       }
     }
 
-    // Hedef kelimeyi yerleştir
+    // Hedef kelimeyi yerleştirdişk
     if (horizontal) {
       for (int i = 0; i < word.length; i++) {
         grid[row][col + i] = word[i];
@@ -94,7 +95,7 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
 
     guessController.clear();
 
-    await Future.delayed(const Duration(seconds: 1)); 
+    await Future.delayed(const Duration(seconds: 1));
 
     // Yeni kelime seçme ve yeni grid oluşturma
     setState(() {
@@ -141,9 +142,11 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    ElevatedButton(
+                    AppButton(
+                      text: "Tahmin Et",
                       onPressed: _checkGuess,
-                      child: const Text("Tahmin Et"),
+
+                      borderRadius: 24,
                     ),
                   ],
                 ),

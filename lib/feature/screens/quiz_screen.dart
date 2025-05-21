@@ -4,6 +4,7 @@ import 'package:flutter_word_game/core/services/firestore_service.dart';
 import 'package:flutter_word_game/core/services/tts_service.dart';
 import 'package:flutter_word_game/feature/models/word.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
+import 'package:flutter_word_game/product/constants/size_utils.dart';
 import 'package:flutter_word_game/product/constants/texts/app_text.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -106,72 +107,88 @@ class _QuizScreenState extends State<QuizScreen> {
                 style: const TextStyle(fontSize: 10),
               ),
             ),
-            const SizedBox(height: 20),
-            Center(child: Image.network(word.imageUrl, height: 150)),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "${word.eng} - ${word.tur}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  icon: const Icon(
-                    Icons.volume_up,
-                    color: ColorUtils.deepPurple,
-                  ),
-                  onPressed: () => ttsService.speak(word.eng),
-                ),
-              ],
-            ),
+            AppSizedBoxes.md,
+            _buildWordCard(word),
             const SizedBox(height: 8),
-            const Text(
-              AppTexts.example,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 4),
-            ...word.samples.map(
-              (sample) => Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text("• "),
-                  Expanded(child: Text(sample)),
-                  IconButton(
-                    icon: const Icon(Icons.volume_up, size: 18),
-                    onPressed: () => ttsService.speak(sample),
-                  ),
-                ],
-              ),
-            ),
+            _buildSamples(word.samples),
             const Spacer(),
-            ElevatedButton.icon(
-              onPressed: () => _submitAnswer(true),
-              icon: const Icon(
-                Icons.check_circle,
-                color: ColorUtils.loginWhite,
-              ),
-              label: const Text("Biliyorum"),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: ColorUtils.trueColor,
-              ),
-            ),
-            const SizedBox(height: 12),
-            ElevatedButton.icon(
-              onPressed: () => _submitAnswer(false),
-              icon: const Icon(Icons.cancel, color: Colors.white),
-              label: const Text("Bilmiyorum"),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: ColorUtils.falseColor,
-              ),
-            ),
+            _buildAnswerButtons(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildWordCard(Word word) {
+    return Column(
+      children: [
+        Center(child: Image.network(word.imageUrl, height: 150)),
+        AppSizedBoxes.md,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "${word.eng} - ${word.tur}",
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            AppSizedBoxes.xs1,
+            IconButton(
+              icon: const Icon(Icons.volume_up, color: ColorUtils.deepPurple),
+              onPressed: () => ttsService.speak(word.eng),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSamples(List<String> samples) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          AppTexts.example,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 4),
+        ...samples.map(
+          (sample) => Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("• "),
+              Expanded(child: Text(sample)),
+              IconButton(
+                icon: const Icon(Icons.volume_up, size: 18),
+                onPressed: () => ttsService.speak(sample),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAnswerButtons() {
+    return Column(
+      children: [
+        ElevatedButton.icon(
+          onPressed: () => _submitAnswer(true),
+          icon: const Icon(Icons.check_circle, color: ColorUtils.loginWhite),
+          label: const Text("Biliyorum"),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ColorUtils.trueColor,
+          ),
+        ),
+        AppSizedBoxes.xs1,
+        ElevatedButton.icon(
+          onPressed: () => _submitAnswer(false),
+          icon: const Icon(Icons.cancel, color: Colors.white),
+          label: const Text("Bilmiyorum"),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ColorUtils.falseColor,
+          ),
+        ),
+      ],
     );
   }
 }

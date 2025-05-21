@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_word_game/product/components/custom_text_field.dart';
+import 'package:flutter_word_game/product/widgets/custom_text_field.dart';
 import 'package:flutter_word_game/product/constants/texts/app_text.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
 import 'package:flutter_word_game/product/constants/size_utils.dart';
@@ -78,18 +78,18 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.account_circle_sharp, size: Numbers.xLarge),
+                const Icon(Icons.account_circle_sharp, size: AppSpacing.xl),
                 Text(
                   LoginPageTexts.welcomeMessage,
-                  style: GoogleFonts.fahkwang(fontSize: Numbers.mediumTree),
+                  style: GoogleFonts.fahkwang(fontSize: AppSpacing.md4),
                 ),
-                SizedBoxUtils.smallBox,
+                AppSizedBoxes.sm,
                 const Text(
                   LoginPageTexts.subMessage,
-                  style: TextStyle(fontSize: Numbers.small),
+                  style: TextStyle(fontSize: AppSpacing.sm),
                   textAlign: TextAlign.center,
                 ),
-                SizedBoxUtils.smallBox,
+                AppSizedBoxes.sm,
 
                 // Kullanıcı adı textfield
                 CustomTextField(
@@ -97,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: AppTexts.email,
                   suffixIcon: Icons.email,
                 ),
-                SizedBoxUtils.smallBox,
+                AppSizedBoxes.sm,
 
                 // Şifre textfield + "Şifremi Unuttum"
                 CustomTextField(
@@ -108,15 +108,15 @@ class _LoginPageState extends State<LoginPage> {
                   suffixIcon: Icons.lock,
                 ),
 
-                SizedBoxUtils.mediumBox,
+                AppSizedBoxes.md,
 
                 //Giriş yap butonu
                 Padding(
-                  padding: PaddingUtils.xLargeHorizontal,
+                  padding: AppPaddings.xLargeHorizontal,
                   child: GestureDetector(
                     onTap: signIn,
                     child: Container(
-                      padding: PaddingUtils.smallAll,
+                      padding: AppPaddings.smAll,
                       decoration: BoxDecoration(
                         color: ColorUtils.lightBlue,
                         borderRadius: BorderRadius.circular(20),
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                           AppTexts.signInText,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: Numbers.small,
+                            fontSize: AppSpacing.sm,
                           ),
                         ),
                       ),
