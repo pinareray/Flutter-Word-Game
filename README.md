@@ -38,3 +38,6 @@ cd flutter_word_game
 flutter pub get
 flutter run
 
+## Android cihazlar için apk link:
+https://drive.google.com/file/d/1q-93jykA6UkDtk73Ta2D6RHiyajTnlIt/view?usp=drive_link
+
