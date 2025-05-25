@@ -69,24 +69,26 @@ class _WordAddScreenState extends State<WordAddScreen> {
 
   void saveWord() async {
     if (_isSaving) return;
+
+    final messenger = ScaffoldMessenger.of(context);
     setState(() => _isSaving = true);
 
     if (engController.text.isEmpty ||
         turController.text.isEmpty ||
         samplesController.text.isEmpty ||
         _selectedImage == null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text(WordAddTexts.fillAllFields)));
-      setState(() => _isSaving = false);
+      messenger.showSnackBar(
+        const SnackBar(content: Text(WordAddTexts.fillAllFields)),
+      );
+      if (mounted) setState(() => _isSaving = false);
       return;
     }
 
     if (await isWordAlreadyExists(engController.text)) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text(WordAddTexts.duplicateWord)));
-      setState(() => _isSaving = false);
+      messenger.showSnackBar(
+        const SnackBar(content: Text(WordAddTexts.duplicateWord)),
+      );
+      if (mounted) setState(() => _isSaving = false);
       return;
     }
 
@@ -113,21 +115,23 @@ class _WordAddScreenState extends State<WordAddScreen> {
 
       await firestoreService.addWord(newWord);
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text(WordAddTexts.success)));
+      messenger.showSnackBar(
+        const SnackBar(content: Text(WordAddTexts.success)),
+      );
 
       engController.clear();
       turController.clear();
       samplesController.clear();
-      setState(() => _selectedImage = null);
+      if (mounted) {
+        setState(() => _selectedImage = null);
+      }
     } catch (e) {
       print("❌ HATA: $e");
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("${WordAddTexts.error}: $e")));
+      messenger.showSnackBar(
+        SnackBar(content: Text("${WordAddTexts.error}: $e")),
+      );
     } finally {
-      setState(() => _isSaving = false);
+      if (mounted) setState(() => _isSaving = false);
     }
   }
 
