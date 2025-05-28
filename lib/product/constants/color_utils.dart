@@ -13,4 +13,10 @@ class ColorUtils {
   static const Color deepPurple = Color.fromARGB(255, 103, 58, 183);
   static const Color grey = Color.fromARGB(255, 224, 224, 224);
   static const Color purpleStatistic = Color.fromARGB(255, 210, 188, 249);
+  static const Color gameYellow = Color(0xFFFFE082);
+  static const Color gameAmberBox = Color(0xFFFFECB3);
+  static const Color gameOrangeShadow = Color(0xFFFFB74D);
+  static const Color gameDeepOrange = Color(0xFFFF7043);
+  static const Color gameBrownText = Color(0xFF5D4037);
+  static const Color gamePurpleAccent = Color(0xFF8E24AA);
 }

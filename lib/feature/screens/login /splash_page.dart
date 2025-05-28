@@ -8,25 +8,31 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSplashScreen(
-      splash: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
-            child: Lottie.asset('assets/Animation_splash_screen.json'),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final screenHeight = constraints.maxHeight;
+
+        return AnimatedSplashScreen(
+          splash: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: screenHeight * 0.4,
+                child: Lottie.asset('assets/Animation_splash_screen.json'),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Kelime Oyununa Hoşgeldiniz',
+                style: TextStyle(fontSize: 20, color: Colors.black),
+              ),
+            ],
           ),
-          const SizedBox(height: 20),
-          const Text(
-            'Kelime Oyununa Hoşgeldiniz',
-            style: TextStyle(fontSize: 20, color: Colors.black),
-          ),
-        ],
-      ),
-      nextScreen: LoginPage(showRegisterPage: () {},),
-      splashIconSize: MediaQuery.of(context).size.height * 0.6,
-      duration: 3000,
-      splashTransition: SplashTransition.fadeTransition,
+          nextScreen: LoginPage(showRegisterPage: () {}),
+          splashIconSize: screenHeight * 0.6,
+          duration: 3000,
+          splashTransition: SplashTransition.fadeTransition,
+        );
+      },
     );
   }
 }

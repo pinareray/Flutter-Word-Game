@@ -137,90 +137,143 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorUtils.buttonPink,
+      backgroundColor: ColorUtils.gameYellow, // Arka plan: Sarımsı oyun rengi
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.create, size: AppSpacing.xl),
-                Text(
-                  RegisterPageText.newAccountMessage,
-                  style: GoogleFonts.fahkwang(fontSize: AppSpacing.md),
-                ),
-                AppSizedBoxes.sm,
-                const Text(
-                  RegisterPageText.subMessage,
-                  style: TextStyle(fontSize: AppSpacing.sm),
-                  textAlign: TextAlign.center,
-                ),
-                AppSizedBoxes.sm,
-                CustomTextField(
-                  hintText: AppTexts.userName,
-                  controller: _userNameController,
-                  suffixIcon: Icons.person,
-                ),
-                AppSizedBoxes.sm,
-                CustomTextField(
-                  hintText: AppTexts.email,
-                  controller: _emailController,
-                  suffixIcon: Icons.email,
-                ),
-                AppSizedBoxes.sm,
-                CustomTextField(
-                  hintText: AppTexts.password,
-                  controller: _passwordController,
-                  isPassword: true,
-                  suffixIcon: Icons.lock,
-                ),
-                AppSizedBoxes.sm,
-                CustomTextField(
-                  hintText: RegisterPageText.confirmPassword,
-                  controller: _confirmPasswordController,
-                  isPassword: true,
-                  suffixIcon: Icons.lock,
-                ),
-                AppSizedBoxes.md,
-                Padding(
-                  padding: AppPaddings.xLargeHorizontal,
-                  child: GestureDetector(
-                    onTap: signUp,
-                    child: Container(
-                      padding: AppPaddings.smAll,
-                      decoration: BoxDecoration(
-                        color: ColorUtils.lightBlue,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          RegisterPageText.signUpMessage,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: AppSpacing.sm,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: ColorUtils.gameAmberBox,
+                borderRadius: BorderRadius.circular(32),
+                boxShadow: [
+                  const BoxShadow(
+                    color: ColorUtils.gameOrangeShadow,
+                    blurRadius: 10,
+                    offset: const Offset(4, 6),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.create,
+                    size: AppSpacing.xl,
+                    color: Colors.deepOrange,
+                  ),
+
+                  Text(
+                    RegisterPageText.newAccountMessage,
+                    style: GoogleFonts.fredoka(
+                      fontSize: AppSpacing.md,
+                      fontWeight: FontWeight.w600,
+                      color: ColorUtils.gameBrownText,
+                    ),
+                  ),
+
+                  AppSizedBoxes.sm,
+
+                  const Text(
+                    RegisterPageText.subMessage,
+                    style: TextStyle(
+                      fontSize: AppSpacing.sm,
+                      color: ColorUtils.gameBrownText,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+
+                  AppSizedBoxes.sm,
+
+                  CustomTextField(
+                    hintText: AppTexts.userName,
+                    controller: _userNameController,
+                    suffixIcon: Icons.person,
+                  ),
+
+                  AppSizedBoxes.sm,
+
+                  CustomTextField(
+                    hintText: AppTexts.email,
+                    controller: _emailController,
+                    suffixIcon: Icons.email,
+                  ),
+
+                  AppSizedBoxes.sm,
+
+                  CustomTextField(
+                    hintText: AppTexts.password,
+                    controller: _passwordController,
+                    isPassword: true,
+                    suffixIcon: Icons.lock,
+                  ),
+
+                  AppSizedBoxes.sm,
+
+                  CustomTextField(
+                    hintText: RegisterPageText.confirmPassword,
+                    controller: _confirmPasswordController,
+                    isPassword: true,
+                    suffixIcon: Icons.lock,
+                  ),
+
+                  AppSizedBoxes.md,
+
+                  Padding(
+                    padding: AppPaddings.xLargeHorizontal,
+                    child: GestureDetector(
+                      onTap: signUp,
+                      child: Container(
+                        padding: AppPaddings.smAll,
+                        decoration: BoxDecoration(
+                          color: ColorUtils.gameDeepOrange,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            const BoxShadow(
+                              color: ColorUtils.gameOrangeShadow,
+                              blurRadius: 6,
+                              offset: Offset(2, 4),
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Text(
+                            RegisterPageText.signUpMessage,
+                            style: GoogleFonts.fredoka(
+                              fontSize: AppSpacing.sm,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(RegisterPageText.loginQuestionMessage),
-                    GestureDetector(
-                      onTap: widget.showLoginPage,
-                      child: const Text(
-                        AppTexts.signInText,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: ColorUtils.belizeHole,
+
+                  AppSizedBoxes.sm,
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        RegisterPageText.loginQuestionMessage,
+                        style: TextStyle(color: ColorUtils.gameBrownText),
+                      ),
+                      GestureDetector(
+                        onTap: widget.showLoginPage,
+                        child: const Text(
+                          AppTexts.signInText,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: ColorUtils.gamePurpleAccent,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

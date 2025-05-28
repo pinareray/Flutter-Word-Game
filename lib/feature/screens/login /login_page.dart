@@ -71,87 +71,131 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorUtils.buttonPink,
+      backgroundColor: ColorUtils.gameYellow,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.account_circle_sharp, size: AppSpacing.xl),
-                Text(
-                  LoginPageTexts.welcomeMessage,
-                  style: GoogleFonts.fahkwang(fontSize: AppSpacing.md4),
-                ),
-                AppSizedBoxes.sm,
-                const Text(
-                  LoginPageTexts.subMessage,
-                  style: TextStyle(fontSize: AppSpacing.sm),
-                  textAlign: TextAlign.center,
-                ),
-                AppSizedBoxes.sm,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: ColorUtils.gameAmberBox,
+                borderRadius: BorderRadius.circular(32),
+                boxShadow: [
+                  const BoxShadow(
+                    color: ColorUtils.gameOrangeShadow,
+                    blurRadius: 10,
+                    offset: Offset(4, 6),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.account_circle_sharp,
+                    size: AppSpacing.xl,
+                    color: ColorUtils.gameDeepOrange,
+                  ),
 
-                // Kullanıcı adı textfield
-                CustomTextField(
-                  controller: _userNameController,
-                  hintText: AppTexts.email,
-                  suffixIcon: Icons.email,
-                ),
-                AppSizedBoxes.sm,
+                  // Başlık yazısı
+                  Text(
+                    LoginPageTexts.welcomeMessage,
+                    style: GoogleFonts.fredoka(
+                      fontSize: AppSpacing.md4,
+                      fontWeight: FontWeight.w600,
+                      color: ColorUtils.gameBrownText,
+                    ),
+                  ),
 
-                // Şifre textfield + "Şifremi Unuttum"
-                CustomTextField(
-                  controller: _passwordController,
-                  hintText: AppTexts.password,
-                  isPassword: true,
-                  hasForgotPassword: true,
-                  suffixIcon: Icons.lock,
-                ),
+                  AppSizedBoxes.sm,
 
-                AppSizedBoxes.md,
+                  const Text(
+                    LoginPageTexts.subMessage,
+                    style: TextStyle(
+                      fontSize: AppSpacing.sm,
+                      color: Colors.brown,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
 
-                //Giriş yap butonu
-                Padding(
-                  padding: AppPaddings.xLargeHorizontal,
-                  child: GestureDetector(
-                    onTap: signIn,
-                    child: Container(
-                      padding: AppPaddings.smAll,
-                      decoration: BoxDecoration(
-                        color: ColorUtils.lightBlue,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          AppTexts.signInText,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: AppSpacing.sm,
+                  AppSizedBoxes.md,
+
+                  // Kullanıcı adı textfield
+                  CustomTextField(
+                    controller: _userNameController,
+                    hintText: AppTexts.email,
+                    suffixIcon: Icons.email,
+                  ),
+                  AppSizedBoxes.sm,
+
+                  // Şifre textfield
+                  CustomTextField(
+                    controller: _passwordController,
+                    hintText: AppTexts.password,
+                    isPassword: true,
+                    hasForgotPassword: true,
+                    suffixIcon: Icons.lock,
+                  ),
+
+                  AppSizedBoxes.md,
+
+                  // Giriş yap butonu
+                  Padding(
+                    padding: AppPaddings.xLargeHorizontal,
+                    child: GestureDetector(
+                      onTap: signIn,
+                      child: Container(
+                        padding: AppPaddings.smAll,
+                        decoration: BoxDecoration(
+                          color: ColorUtils.gameDeepOrange,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.deepOrange.shade200,
+                              blurRadius: 6,
+                              offset: const Offset(2, 4),
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Text(
+                            AppTexts.signInText,
+                            style: GoogleFonts.fredoka(
+                              fontSize: AppSpacing.sm,
+                              fontWeight: FontWeight.bold,
+                              color: ColorUtils.loginWhite,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
 
-                //Hesap yoksa kaydolun.
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(LoginPageTexts.signUpQuestionText),
-                    GestureDetector(
-                      onTap: widget.showRegisterPage,
-                      child: const Text(
-                        LoginPageTexts.signUpText,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: ColorUtils.belizeHole,
+                  AppSizedBoxes.sm,
+
+                  // Kaydolun
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        LoginPageTexts.signUpQuestionText,
+                        style: TextStyle(color: ColorUtils.gameBrownText),
+                      ),
+                      GestureDetector(
+                        onTap: widget.showRegisterPage,
+                        child: const Text(
+                          LoginPageTexts.signUpText,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: ColorUtils.gamePurpleAccent,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
