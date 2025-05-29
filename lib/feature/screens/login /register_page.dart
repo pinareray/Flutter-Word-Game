@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_word_game/product/widgets/box_decoration.dart';
 import 'package:flutter_word_game/product/widgets/custom_text_field.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
 import 'package:flutter_word_game/product/constants/texts/app_text.dart';
@@ -23,7 +24,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  //Sayfa kapandığında bellek bu sayede temizlenir.
   @override
   void dispose() {
     _emailController.dispose();
@@ -33,7 +33,6 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
-  //E- posta formatı doğrumu diye kontrol eder.
   bool isValidEmail(String email) {
     return RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(email);
   }
@@ -73,13 +72,11 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     try {
-      // Firebase Auth ile kullanıcı oluşturuyorum
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
       String uid = userCredential.user!.uid;
 
-      // Kullanıcı bilgilerini Firestore'a kaydettim
       await FirebaseFirestore.instance.collection('users').doc(uid).set({
         'userID': uid,
         'userName': userName,
@@ -89,13 +86,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
       _showDialog(AppTexts.succesful, RegisterPageText.succesfulMessage);
 
-      //Giriş ekranına yönlendiriyoruz.
       Future.delayed(const Duration(seconds: 2), () {
         widget.showLoginPage();
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
-        //E-posta kayıtlı mı? kontrol ettim
         _showDialog(
           LoginPageTexts.registrationError,
           RegisterPageText.existingEmail,
@@ -107,8 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
         );
       }
     } catch (e) {
-      //Firebase dışı hata olursa terminale yazdırıp görüyoruz.
-      print("Genel Hata: \$e");
+      print("Genel Hata: $e");
     }
   }
 
@@ -137,24 +131,11 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorUtils.gameYellow, // Arka plan: Sarımsı oyun rengi
+      backgroundColor: ColorUtils.gameYellow,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 24),
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: ColorUtils.gameAmberBox,
-                borderRadius: BorderRadius.circular(32),
-                boxShadow: [
-                  const BoxShadow(
-                    color: ColorUtils.gameOrangeShadow,
-                    blurRadius: 10,
-                    offset: const Offset(4, 6),
-                  ),
-                ],
-              ),
+            child: GameStyledBox(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -163,7 +144,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     size: AppSpacing.xl,
                     color: Colors.deepOrange,
                   ),
-
                   Text(
                     RegisterPageText.newAccountMessage,
                     style: GoogleFonts.fredoka(
@@ -172,9 +152,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       color: ColorUtils.gameBrownText,
                     ),
                   ),
-
                   AppSizedBoxes.sm,
-
                   const Text(
                     RegisterPageText.subMessage,
                     style: TextStyle(
@@ -183,43 +161,33 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-
                   AppSizedBoxes.sm,
-
                   CustomTextField(
                     hintText: AppTexts.userName,
                     controller: _userNameController,
                     suffixIcon: Icons.person,
                   ),
-
                   AppSizedBoxes.sm,
-
                   CustomTextField(
                     hintText: AppTexts.email,
                     controller: _emailController,
                     suffixIcon: Icons.email,
                   ),
-
                   AppSizedBoxes.sm,
-
                   CustomTextField(
                     hintText: AppTexts.password,
                     controller: _passwordController,
                     isPassword: true,
                     suffixIcon: Icons.lock,
                   ),
-
                   AppSizedBoxes.sm,
-
                   CustomTextField(
                     hintText: RegisterPageText.confirmPassword,
                     controller: _confirmPasswordController,
                     isPassword: true,
                     suffixIcon: Icons.lock,
                   ),
-
                   AppSizedBoxes.md,
-
                   Padding(
                     padding: AppPaddings.xLargeHorizontal,
                     child: GestureDetector(
@@ -229,8 +197,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         decoration: BoxDecoration(
                           color: ColorUtils.gameDeepOrange,
                           borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            const BoxShadow(
+                          boxShadow: const [
+                            BoxShadow(
                               color: ColorUtils.gameOrangeShadow,
                               blurRadius: 6,
                               offset: Offset(2, 4),
@@ -250,9 +218,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
-
                   AppSizedBoxes.sm,
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

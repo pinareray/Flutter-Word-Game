@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_word_game/product/widgets/box_decoration.dart';
 import 'package:flutter_word_game/product/widgets/custom_text_field.dart';
 import 'package:flutter_word_game/product/constants/texts/app_text.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
 import 'package:flutter_word_game/product/constants/size_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 
 class LoginPage extends StatefulWidget {
   final VoidCallback showRegisterPage;
@@ -75,20 +77,7 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 24),
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: ColorUtils.gameAmberBox,
-                borderRadius: BorderRadius.circular(32),
-                boxShadow: [
-                  const BoxShadow(
-                    color: ColorUtils.gameOrangeShadow,
-                    blurRadius: 10,
-                    offset: Offset(4, 6),
-                  ),
-                ],
-              ),
+            child: GameStyledBox(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -97,8 +86,6 @@ class _LoginPageState extends State<LoginPage> {
                     size: AppSpacing.xl,
                     color: ColorUtils.gameDeepOrange,
                   ),
-
-                  // Başlık yazısı
                   Text(
                     LoginPageTexts.welcomeMessage,
                     style: GoogleFonts.fredoka(
@@ -107,9 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                       color: ColorUtils.gameBrownText,
                     ),
                   ),
-
                   AppSizedBoxes.sm,
-
                   const Text(
                     LoginPageTexts.subMessage,
                     style: TextStyle(
@@ -118,18 +103,13 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-
                   AppSizedBoxes.md,
-
-                  // Kullanıcı adı textfield
                   CustomTextField(
                     controller: _userNameController,
                     hintText: AppTexts.email,
                     suffixIcon: Icons.email,
                   ),
                   AppSizedBoxes.sm,
-
-                  // Şifre textfield
                   CustomTextField(
                     controller: _passwordController,
                     hintText: AppTexts.password,
@@ -137,10 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                     hasForgotPassword: true,
                     suffixIcon: Icons.lock,
                   ),
-
                   AppSizedBoxes.md,
-
-                  // Giriş yap butonu
                   Padding(
                     padding: AppPaddings.xLargeHorizontal,
                     child: GestureDetector(
@@ -171,10 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-
                   AppSizedBoxes.sm,
-
-                  // Kaydolun
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -4,6 +4,7 @@ import 'package:flutter_word_game/product/widgets/custom_text_field.dart';
 import 'package:flutter_word_game/product/constants/color_utils.dart';
 import 'package:flutter_word_game/product/constants/size_utils.dart';
 import 'package:flutter_word_game/product/constants/texts/app_text.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -48,31 +49,73 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorUtils.buttonPink,
-      appBar: AppBar(backgroundColor: ColorUtils.buttonPink, elevation: 0),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            ForgotPasswordTexts.pageInstruction,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: AppSpacing.md),
-          ),
-          AppSizedBoxes.sm,
+      backgroundColor: ColorUtils.gameYellow, // Arka plan sarı
+      appBar: AppBar(
+        backgroundColor: ColorUtils.gameYellow,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.brown),
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: ColorUtils.gameAmberBox,
+              borderRadius: BorderRadius.circular(32),
+              boxShadow: [
+                const BoxShadow(
+                  color: ColorUtils.gameOrangeShadow,
+                  blurRadius: 10,
+                  offset: Offset(4, 6),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  ForgotPasswordTexts.pageInstruction,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.fredoka(
+                    fontSize: AppSpacing.md,
+                    color: ColorUtils.gameBrownText,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                AppSizedBoxes.sm,
 
-          CustomTextField(
-            hintText: AppTexts.email,
-            controller: _emailController,
-            suffixIcon: Icons.email,
-          ),
-          AppSizedBoxes.sm,
+                CustomTextField(
+                  hintText: AppTexts.email,
+                  controller: _emailController,
+                  suffixIcon: Icons.email,
+                ),
 
-          MaterialButton(
-            onPressed: passwordReset,
-            child:  Text(ForgotPasswordTexts.resetButton),
-            color: ColorUtils.lightBlue,
+                AppSizedBoxes.md,
+
+                MaterialButton(
+                  onPressed: passwordReset,
+                  color: ColorUtils.gameDeepOrange,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 14,
+                  ),
+                  child: Text(
+                    ForgotPasswordTexts.resetButton,
+                    style: GoogleFonts.fredoka(
+                      fontSize: AppSpacing.sm,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
   }
