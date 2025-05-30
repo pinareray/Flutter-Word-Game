@@ -88,10 +88,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorUtils.appbarColor,
+        elevation: 3,
         title: Text(
           '🎮 Kelime Oyunu',
           style: GoogleFonts.permanentMarker(
-            fontSize: 24,
+            fontSize: 26,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
@@ -105,7 +106,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -122,10 +122,10 @@ class _HomePageState extends State<HomePage> {
               alignment: Alignment.centerLeft,
               child: Text(
                 '${AppTexts.welcome}, ${userName ?? user.email}',
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                style: GoogleFonts.fredoka(
+                  fontSize: 18,
+                  color: ColorUtils.gameBrownText,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
@@ -198,26 +198,33 @@ class _HomePageState extends State<HomePage> {
   Widget _buildGameCard(IconData icon, String title, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        color: Colors.deepPurple.shade300,
-        elevation: 6,
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 40, color: Colors.white),
-              const SizedBox(height: 10),
-              Text(
-                title,
-                style: GoogleFonts.fredoka(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: ColorUtils.gameAmberBox,
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: const [
+            BoxShadow(
+              color: ColorUtils.gameOrangeShadow,
+              blurRadius: 8,
+              offset: Offset(3, 5),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 42, color: ColorUtils.gamePurpleAccent),
+            const SizedBox(height: 12),
+            Text(
+              title,
+              style: GoogleFonts.fredoka(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: ColorUtils.gameBrownText,
               ),
-            ],
-          ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );
